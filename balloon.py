@@ -1,6 +1,7 @@
 import turtle
 import random
 blns=[]
+bombs=[]
 pen=turtle.Turtle()
 pen.shape("triangle")
 pen.up()
@@ -13,6 +14,14 @@ def bln():
     balloon.goto(random.randint(-240, 240),240)
     blns.append(balloon)
     balloon.showturtle()
+def bmb():
+    bomb=turtle.Turtle()
+    bomb.hideturtle()
+    bomb.shape("circle")
+    bomb.up()
+    bomb.goto(random.randint(-240, 240),240)
+    bombs.append(bomb)
+    bomb.showturtle()
 screen=turtle.Screen()
 screen.setup(500,500)
 pen.left(90)
@@ -39,6 +48,9 @@ while True:
     num=random.randint(1,10)
     if num==9:
         bln()
+    num2=random.randint(1,10)
+    if num2==9:
+        bmb()   
     for balloon in blns:
             balloon.sety(balloon.ycor()-8)
             
@@ -49,6 +61,13 @@ while True:
                  turtle.clear()
                  turtle.hideturtle()
                  turtle.write(str(score))
+            elif balloon.ycor()<-250:
+                 blns.remove(balloon)
+    for bomb in bombs:
+        bomb.sety(bomb.ycor()-8)
+        if bomb.distance(pen)<20:
+            turtle.write("game over",font=("arial",25,"bold"))
+            
 
                  
 
