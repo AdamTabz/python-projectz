@@ -1,4 +1,5 @@
 import pgzrun
+import random
 HEIGHT=850
 WIDTH=786 
 ship=Actor("ship.png")
@@ -6,6 +7,8 @@ ship.pos=(350,800)
 opps=[]
 lives=3
 bullets=[]
+lasers=[]
+
 
 def draw():
     if lives==0:
@@ -18,6 +21,8 @@ def draw():
     screen.draw.text("lives"+str(lives),(300,100))
     for pew in bullets:
         pew.draw()
+    for laser in lasers:
+        laser.draw()
 def update():
     global lives
     if lives==0:
@@ -39,16 +44,28 @@ def update():
             if pew.colliderect(opp):
                 opps.remove(opp)
                 bullets.remove(pew)
+    for laser in lasers:
+        laser.y+=4
+    for laser in lasers:
+        if laser.colliderect(ship):
+                lives-=1
+                lasers.remove(laser)
+def oppshoot():
+    shooter=random.choice(opps)
+    laser=Actor("laser.png",shooter.pos)
+    lasers.append(laser)
+    clock.schedule(oppshoot, 0.2)
 
 def newopp():
     for i in range(4):
 
         opp=Actor("opp.png",(100+i*170, 150))
         opps.append(opp)
-    clock.schedule(newopp,2)
+    clock.schedule(newopp,3.4)
 def on_key_down(key):
     if key==keys.SPACE:
         pew=Actor("pew.png",(ship.x,ship.y))
         bullets.append(pew)
 newopp()
+oppshoot()
 pgzrun.go()
