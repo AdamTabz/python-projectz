@@ -18,7 +18,7 @@ def draw():
     goku.draw()
     for opp in opps:
         opp.draw()
-    screen.draw.text(str(score),(500,100),color=("black"))
+    screen.draw.text("score"+str(score),(100,100),color=("black"),fontsize=42)
 
 
 def faster():
@@ -33,10 +33,10 @@ def update():
     if score<0:
                 
         return
-    if keyboard.up:
-        goku.y-=10
-    if keyboard.down:
-        goku.y+=10
+    if keyboard.up and goku.y>0:
+        goku.y-=12
+    if keyboard.down and goku.y<840:
+        goku.y+=12
     for opp in opps:
         opp.x+=speed
         if opp.x==1200:
